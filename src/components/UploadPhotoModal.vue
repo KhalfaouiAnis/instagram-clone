@@ -25,7 +25,7 @@ const showModal = () => {
 
 const handleOk = async () => {
     loading.value = true
-    const fileName = new Date()
+    const fileName = new Date().toString().replace(" ","")
 
     if (file.value) {
         const { data, error } = await supabase.storage.from("images").upload("public/" + fileName, file.value)
@@ -57,7 +57,7 @@ const handleCancel = () => {
     visible.value = false
 };
 
-const handleUploadChnage = (e) => {
+const handleUploadChange = (e) => {
     if (e.target.files[0]) {
         file.value = e.target.files[0]
     }
@@ -70,7 +70,7 @@ const handleUploadChnage = (e) => {
         <AButton class="btn" type="primary" @click="showModal">Upload Photo</AButton>
         <AModal v-model:visible="visible" title="Upload Photo" @ok="handleOk">
             <div v-if="!loading">
-                <input @change="handleUploadChnage" type="file" accept=".jpeg,.png">
+                <input class="input" @change="handleUploadChange" type="file" accept=".jpeg,.png">
                 <AInput v-model:value="caption" :maxLength="50" placeholder="Caption..." />
                 <ATypographyText v-if="errorMessage" type="danger">
                     {{ errorMessage }}

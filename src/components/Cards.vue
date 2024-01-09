@@ -25,7 +25,7 @@ const fetchData = async () => {
     const { data } = await supabase
         .from("posts")
         .select("*")
-        .in("owner_id", ownerIds)
+        .in("owner_id", ownerIds.value)
         .range(0, lastCardIndex.value)
         .order("created_at", { ascending: false })
     posts.value = data
@@ -50,7 +50,7 @@ const fetchNextSet = async () => {
     }
 }
 
-onMounted(() => fetchData()),
+onMounted(async() => fetchData())
 
 </script>
 

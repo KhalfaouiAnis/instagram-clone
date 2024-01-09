@@ -8,8 +8,8 @@ import { supabase } from '@/supabase';
 const userStore = useUserStore()
 
 const { user } = storeToRefs(userStore)
-const { params: { profileUsername } } = useRoute()
-const { addNewPost, updateIsFollowing, isFollowing, userInfo, ...rest } = defineProps(["addNewPost", 'user', 'userInfo', 'isFollowing'])
+const { params: { username: profileUsername } } = useRoute()
+const { addNewPost, updateIsFollowing, isFollowing, userInfo, ...rest } = defineProps(["updateIsFollowing", "addNewPost", 'user', 'userInfo', 'isFollowing'])
 
 const followUser = async () => {
     updateIsFollowing(true)
@@ -33,9 +33,9 @@ const unfollowUser = async () => {
 <template>
     <div class="userbar-container" v-if="user">
         <div class="top-content">
-            <ATypographyTitle :level="2">{{ rest.user.username }}</ATypographyTitle>
+            <!-- <ATypographyTitle :level="2">{{ rest.user.username }}</ATypographyTitle> -->
             <div v-if="user">
-                <UploadPhotoModal v-if="profileUsername === user.username" :addNewPost="addNewPost" />
+                <UploadPhotoModal v-if="profileUsername === user?.username" :addNewPost="addNewPost" />
                 <div v-else>
                     <AButton v-if="!isFollowing" @click="followUser">
                         Follow
@@ -50,7 +50,6 @@ const unfollowUser = async () => {
             <ATypographyTitle :level="5">{{ userInfo.posts }} posts</ATypographyTitle>
             <ATypographyTitle :level="5">{{ userInfo.followers }} followers</ATypographyTitle>
             <ATypographyTitle :level="5">{{ userInfo.following }} following</ATypographyTitle>
-
         </div>
     </div>
     <div v-else class="userbar-container">

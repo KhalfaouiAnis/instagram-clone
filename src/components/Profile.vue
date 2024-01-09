@@ -73,7 +73,7 @@ const fetchFollowingCount = async () => {
 }
 
 const fetchIsFollowing = async () => {
-    if (loggedInUser.value && (loggedInUser.value.id !== user.value.id)) {
+    if (loggedInUser.value && (loggedInUser.value?.id !== user.value?.id)) {
         const { data } = await supabase
             .from("followers_following")
             .select()
@@ -89,9 +89,7 @@ const fetchIsFollowing = async () => {
 
 watch(loggedInUser, () => fetchIsFollowing())
 
-onMounted(() => {
-    fetchData()
-})
+onMounted(() => fetchData())
 
 </script>
 
@@ -100,7 +98,7 @@ onMounted(() => {
         <div class="profile-container" v-if="!loading">
             <UserBar :key="profileUsername" :updateIsFollowing="updateIsFollowing" :isFollowing="isFollowing"
                 :addNewPost="addNewPost" :user="user" :userInfo="userInfo" />
-            <ImageGallary :posts="posts" />
+            <ImageGallary v-if="loggedInUser" :posts="posts" />
         </div>
         <div v-else class="spinner">
             <ASpin />
@@ -111,6 +109,7 @@ onMounted(() => {
 <style scoped>
 .profile-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
     padding: 20px 0;
 }

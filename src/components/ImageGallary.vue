@@ -1,7 +1,7 @@
 <script setup>
 
 const { posts } = defineProps(['posts'])
-const {VITE_BASE_PHOTO_URL} = import.meta.envs
+const {VITE_BASE_PHOTO_URL} = import.meta.env
 
 </script>
 

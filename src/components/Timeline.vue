@@ -17,7 +17,7 @@ const { user, loadingUser } = storeToRefs(userStore)
             <LoginMessage v-else />
         </div>
         <div v-else class="timeline-spinner">
-            <ASpinn />
+            <ASpin />
         </div>
     </Container>
 </template>
